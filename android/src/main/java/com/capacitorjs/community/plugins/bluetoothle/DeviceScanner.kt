@@ -51,7 +51,7 @@ class DeviceScanner(
     private var dialogHandler: Handler? = null
     private var stopScanHandler: Handler? = null
     private var allowDuplicates: Boolean = false
-    private var namePrefixes: Array<String> = []
+    private var namePrefixes: ArrayList<String> = []
 
     private val scanCallback: ScanCallback = object : ScanCallback() {
         override fun onScanResult(callbackType: Int, result: ScanResult) {
@@ -82,7 +82,7 @@ class DeviceScanner(
         scanFilters: List<ScanFilter>,
         scanSettings: ScanSettings,
         allowDuplicates: Boolean,
-        namePrefixes: Array<String>,
+        namePrefixes: List<String>,
         callback: (ScanResponse) -> Unit,
         scanResultCallback: ((ScanResult) -> Unit)?
     ) {
