@@ -17,7 +17,7 @@ class DeviceManager: NSObject, CBCentralManagerDelegate {
     private var alertController: UIAlertController?
     private var discoveredDevices = [String: Device]()
     private var deviceNameFilter: String?
-    private var deviceNamePrefixFilter: String?
+    private var deviceNamePrefixesFilter: [String]?
     private var shouldShowDeviceList = false
     private var allowDuplicates = false
     private var manufacturerDataFilters: [ManufacturerDataFilter]?
@@ -79,7 +79,7 @@ class DeviceManager: NSObject, CBCentralManagerDelegate {
     func startScanning(
         _ serviceUUIDs: [CBUUID],
         _ name: String?,
-        _ namePrefix: String?,
+        _ namePrefixes: [String]?,
         _ manufacturerDataFilters: [ManufacturerDataFilter]?,
         _ allowDuplicates: Bool,
         _ shouldShowDeviceList: Bool,
@@ -95,7 +95,7 @@ class DeviceManager: NSObject, CBCentralManagerDelegate {
             self.shouldShowDeviceList = shouldShowDeviceList
             self.allowDuplicates = allowDuplicates
             self.deviceNameFilter = name
-            self.deviceNamePrefixFilter = namePrefix
+            self.deviceNamePrefixesFilter = namePrefixes
             self.manufacturerDataFilters = manufacturerDataFilters
 
             if shouldShowDeviceList {
@@ -154,7 +154,7 @@ class DeviceManager: NSObject, CBCentralManagerDelegate {
         guard isNew || self.allowDuplicates else { return }
 
         guard self.passesNameFilter(peripheralName: peripheral.name) else { return }
-        guard self.passesNamePrefixFilter(peripheralName: peripheral.name) else { return }
+        guard self.passesNamePrefixesFilter(peripheralName: peripheral.name) else { return }
         guard self.passesManufacturerDataFilter(advertisementData) else { return }
 
         let device: Device
@@ -295,9 +295,10 @@ class DeviceManager: NSObject, CBCentralManagerDelegate {
     }
 
     private func passesNamePrefixFilter(peripheralName: String?) -> Bool {
-        guard let prefix = self.deviceNamePrefixFilter else { return true }
+        guard let prefixes = self.deviceNamePrefixesFilter else { return true }
         guard let name = peripheralName else { return false }
-        return name.hasPrefix(prefix)
+        let matchingPrefixes = prefixes.filter { name.hasPrefix($0) }
+        return ! matchingPrefixes.isEmpty()
     }
 
     private func passesManufacturerDataFilter(_ advertisementData: [String: Any]) -> Bool {

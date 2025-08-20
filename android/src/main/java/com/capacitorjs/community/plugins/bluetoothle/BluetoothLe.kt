@@ -309,7 +309,7 @@ class BluetoothLe : Plugin() {
         assertBluetoothAdapter(call) ?: return
         val scanFilters = getScanFilters(call) ?: return
         val scanSettings = getScanSettings(call) ?: return
-        val namePrefix = call.getString("namePrefix", "") as String
+        val namePrefixes = (call.getArray("namePrefixes", JSArray()) as JSArray).toList<String>()
 
         try {
             deviceScanner?.stopScanning()
@@ -327,7 +327,7 @@ class BluetoothLe : Plugin() {
             showDialog = true,
         )
         deviceScanner?.startScanning(
-            scanFilters, scanSettings, false, namePrefix, { scanResponse ->
+            scanFilters, scanSettings, false, namePrefixes, { scanResponse ->
                 run {
                     if (scanResponse.success) {
                         if (scanResponse.device == null) {
@@ -350,7 +350,7 @@ class BluetoothLe : Plugin() {
         assertBluetoothAdapter(call) ?: return
         val scanFilters = getScanFilters(call) ?: return
         val scanSettings = getScanSettings(call) ?: return
-        val namePrefix = call.getString("namePrefix", "") as String
+        val namePrefixes = (call.getArray("namePrefixes", JSArray()) as JSArray).toList<String>()
         val allowDuplicates = call.getBoolean("allowDuplicates", false) as Boolean
 
         try {
@@ -372,7 +372,7 @@ class BluetoothLe : Plugin() {
             scanFilters,
             scanSettings,
             allowDuplicates,
-            namePrefix,
+            namePrefixes,
             { scanResponse ->
                 run {
                     if (scanResponse.success) {

@@ -115,13 +115,13 @@ public class BluetoothLe: CAPPlugin {
 
         let serviceUUIDs = self.getServiceUUIDs(call)
         let name = call.getString("name")
-        let namePrefix = call.getString("namePrefix")
+        let namePrefixes = call.getArray("namePrefixes")
         let manufacturerDataFilters = self.getManufacturerDataFilters(call)
 
         deviceManager.startScanning(
             serviceUUIDs,
             name,
-            namePrefix,
+            namePrefixes,
             manufacturerDataFilters,
             false,
             true,
@@ -148,14 +148,14 @@ public class BluetoothLe: CAPPlugin {
 
         let serviceUUIDs = self.getServiceUUIDs(call)
         let name = call.getString("name")
-        let namePrefix = call.getString("namePrefix")
+        let namePrefixes = call.getArray("namePrefixes")
         let allowDuplicates = call.getBool("allowDuplicates", false)
         let manufacturerDataFilters = self.getManufacturerDataFilters(call)
 
         deviceManager.startScanning(
             serviceUUIDs,
             name,
-            namePrefix,
+            namePrefixes,
             manufacturerDataFilters,
             allowDuplicates,
             false,

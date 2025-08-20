@@ -28,9 +28,9 @@ export interface RequestBleDeviceOptions {
    */
   name?: string;
   /**
-   * Filter devices by name prefix
+   * Filter devices by name prefixes
    */
-  namePrefix?: string;
+  namePrefixes?: string[];
   /**
    * For **web**, all services that will be used have to be listed under services or optionalServices,
    * e.g. [numberToUUID(0x180f)] (see [UUID format](#uuid-format))
