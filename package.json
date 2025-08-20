@@ -20,6 +20,7 @@
     "swiftlint": "node-swiftlint",
     "docgen": "docgen --api BleClientInterface --output-readme README.md --output-json dist/docs.json",
     "postdocgen": "prettier README.md --write",
+    "prepare": "npm run build",
     "build": "npm run clean && npm run docgen && tsc && rollup -c rollup.config.mjs",
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",
@@ -68,12 +69,7 @@
     "ios/Plugin/",
     "CapacitorCommunityBluetoothLe.podspec"
   ],
-  "keywords": [
-    "capacitor",
-    "plugin",
-    "native",
-    "bluetooth"
-  ],
+  "keywords": ["capacitor", "plugin", "native", "bluetooth"],
   "capacitor": {
     "ios": {
       "src": "ios"
