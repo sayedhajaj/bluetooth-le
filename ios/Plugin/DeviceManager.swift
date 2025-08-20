@@ -294,11 +294,11 @@ class DeviceManager: NSObject, CBCentralManagerDelegate {
         return name == nameFilter
     }
 
-    private func passesNamePrefixFilter(peripheralName: String?) -> Bool {
+    private func passesNamePrefixesFilter(peripheralName: String?) -> Bool {
         guard let prefixes = self.deviceNamePrefixesFilter else { return true }
         guard let name = peripheralName else { return false }
         let matchingPrefixes = prefixes.filter { name.hasPrefix($0) }
-        return ! matchingPrefixes.isEmpty()
+        return !(matchingPrefixes.isEmpty())
     }
 
     private func passesManufacturerDataFilter(_ advertisementData: [String: Any]) -> Bool {
