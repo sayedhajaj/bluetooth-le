@@ -115,7 +115,7 @@ public class BluetoothLe: CAPPlugin {
 
         let serviceUUIDs = self.getServiceUUIDs(call)
         let name = call.getString("name")
-        let namePrefixes = call.getArray("namePrefixes")
+        let namePrefixes = call.getArray("namePrefixes", String.self)
         let manufacturerDataFilters = self.getManufacturerDataFilters(call)
 
         deviceManager.startScanning(
