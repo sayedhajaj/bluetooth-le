@@ -298,7 +298,7 @@ class DeviceManager: NSObject, CBCentralManagerDelegate {
         guard let prefixes = self.deviceNamePrefixesFilter else { return true }
         guard let name = peripheralName else { return false }
         let matchingPrefixes = prefixes.filter({ name.hasPrefix($0) })
-        return !(matchingPrefixes.isEmpty))
+        return !(matchingPrefixes.isEmpty)
     }
 
     private func passesManufacturerDataFilter(_ advertisementData: [String: Any]) -> Bool {
